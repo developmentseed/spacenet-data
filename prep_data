@@ -19,3 +19,8 @@ ls $OUTPUT/labels/grayscale | parallel "./label_counts $OUTPUT/labels/grayscale/
 ./label_stats $OUTPUT/labels/label-counts.txt > $OUTPUT/labels/label-stats.csv
 
 cp classes.json $OUTPUT/
+
+split -l $[ $(wc -l $OUTPUT/all.txt|cut -d" " -f1) * 70 / 100 ] -a1 \
+  $OUTPUT/all.txt $OUTPUT/split
+cp $OUTPUT/splita $OUTPUT/train.txt
+cp $OUTPUT/splitb $OUTPUT/val.txt

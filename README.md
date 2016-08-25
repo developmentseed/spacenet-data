@@ -11,7 +11,7 @@ cd /mnt/AOI_1_Rio/processedData
 tar zxvf 3band.tar.gz
 cd vectorData
 tar zxvf geojson.tar.gz
-docker run -v /mnt/AOI_1_Rio:/spacenet -v /mnt/spacenet-1:/data developmentseed/spacenet-data
+docker run -v /mnt/AOI_1_Rio:/spacenet:ro -v /mnt/spacenet-1:/data developmentseed/spacenet-data
 ```
 
 

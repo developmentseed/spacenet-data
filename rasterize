@@ -1,0 +1,24 @@
+#!/bin/bash
+
+VECTOR=$1
+RASTERS=$2
+OUTPUT=$3
+
+sample=$OUTPUT/sample.txt
+
+img=$(basename ${VECTOR/_Geo.geojson/})
+raster=$RASTERS$img.tif
+label=$OUTPUT/labels/grayscale/$img.tif
+humanlabel=$OUTPUT/labels/color/$img.tif
+
+features=$(grep geometry $VECTOR | wc -l)
+
+if [ $features -eq 0 ]
+then
+  (>&2 echo "Skipping $VECTOR because it has no features.")
+  exit
+fi
+
+echo $raster $label
+rio rasterize --like $raster --default-value 255 $VECTOR $humanlabel
+rio rasterize --like $raster --default-value 0 --fill 1 $VECTOR $label

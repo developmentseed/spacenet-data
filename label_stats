@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import sys
+import csv
+import numpy as np
+
+f = sys.argv[1]
+
+frequencies = []
+with open(f, 'rb') as data:
+    rows = csv.reader(data)
+    for row in rows:
+        frequencies.append(np.array(map(int, row)))
+
+frequencies = np.array(frequencies).transpose((1, 0))
+
+# total frequencies for each label
+total_frequencies = frequencies.sum(1)
+# image counts for each label
+image_counts = (frequencies != 0).sum(1)
+
+print('label,frequency,image_count')
+for i in range(total_frequencies.shape[0]):
+    print('%s,%s,%s' % (i, total_frequencies[i], image_counts[i]))
